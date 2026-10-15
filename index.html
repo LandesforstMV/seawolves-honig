@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wolfis wilder Honig – Die süßeste Seite der Umweltbildung</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #14285a;
+      --orange: #e98308;
+      --black: #000000;
+      --white: #ffffff;
+      --cream: #faf7f2;
+      --light-navy: #1e3a6e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ─── BIENEN-CURSOR ─── */
+    a, button, [role="button"], .btn-primary, .btn-secondary, .btn-cta, .btn-cta-primary, .btn-cta-secondary, .burger-btn, .partner-link, .menu-link, .floating-logo {
+      cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABFUlEQVR4nO1VsQ3CMBD8IIoMAGIFEAswByXMQpVZTMkcyQDIrBCZAeieylFi7OTPCXKKXGNFb9/fn/0fogUgNvsLj4m7WI2TkwihKtHqiWbgQBZ70Fft+3WH+aIcmPIKvIqZufzZmGWndhKjFW0P1ybe/rZO9PFYdBxg5tJ3yI0ZrahvlfJ0BIQOuDBaVbZS32q0qiQ8Nl90F7Tt931LkbwNGwHu4whhaB/KA3eBhWQOSHiiBlFd5MF+390+ECf8BvqSS+KjBEjJERFrRAAR0VGdB/c8rw8xn9gB1FrpftgBpLrJBUjst5AKTT4JIQemtp8IHER1kbO0C6QDKfkVwKNY0l7IOIYdGCL/+7+gLwmafMEs8AU2DpOFKBT8PwAAAABJRU5ErkJggg==') 16 16, pointer !important;
+    }
+
+
+
+    /* ─── FLOATING LOGO ─── */
+    .floating-logo {
+      position: fixed;
+      top: 1.2rem;
+      left: 1.2rem;
+      z-index: 100;
+      display: block;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .floating-logo img {
+      height: 52px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+      transition: all 0.3s ease;
+    }
+
+    .floating-logo.scrolled img {
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+    }
+
+    @media (min-width: 768px) {
+      .floating-logo img { height: 200px; }
+    }
+
+    /* ─── BURGER BUTTON ─── */
+    .burger-btn {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.2rem;
+      z-index: 100;
+      width: 48px;
+      height: 48px;
+      background: rgba(20, 40, 90, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .burger-btn:hover {
+      background: var(--orange);
+      transform: scale(1.05);
+    }
+
+    .burger-btn span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .burger-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger-btn.open span:nth-child(2) { opacity: 0; }
+    .burger-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ─── FULLSCREEN MENU ─── */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: rgba(20, 40, 90, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .menu-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .menu-overlay a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .menu-overlay a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 40px;
+      height: 3px;
+      background: var(--orange);
+      border-radius: 2px;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-overlay a:hover { color: var(--orange); }
+    .menu-overlay a:hover::after { transform: translateX(-50%) scaleX(1); }
+
+    .menu-overlay .menu-footer {
+      position: absolute;
+      bottom: 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(20,40,90,0.2) 0%, rgba(20,40,90,0.75) 100%),
+                  url('https://plus.unsplash.com/premium_photo-1726743622090-abfc4a91f80b?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem 1.5rem 3rem;
+      max-width: 700px;
+      animation: fadeUp 1s ease-out;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+
+    .hero p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.3);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      border-radius: 3rem;
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(233,131,8,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(233,131,8,0.5);
+    }
+
+    .btn-primary svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-hint svg { width: 28px; height: 28px; fill: var(--white); opacity: 0.7; }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 4rem 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 768px) {
+      section { max-width: 900px; padding: 5rem 2rem; }
+      .hero h1 { font-size: 3.2rem; }
+      .hero-content { max-width: 800px; }
+    }
+
+    @media (min-width: 1024px) {
+      section { max-width: 1100px; padding: 6rem 3rem; }
+      .hero h1 { font-size: 3.8rem; }
+    }
+
+    .section-header { text-align: center; margin-bottom: 2rem; }
+
+    .section-header h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    @media (min-width: 768px) {
+      .section-header h2 { font-size: 2.4rem; }
+    }
+
+    .section-header p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .divider {
+      width: 50px; height: 3px;
+      background: var(--orange);
+      margin: 0.8rem auto;
+      border-radius: 2px;
+    }
+
+    /* ─── MAP ─── */
+    .map-section {
+      background: var(--white);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      margin: 0 1rem;
+      box-shadow: 0 10px 40px rgba(20,40,90,0.08);
+    }
+
+    @media (min-width: 768px) {
+      .map-section { padding: 3rem; margin: 0 2rem; }
+    }
+
+    .map-container {
+      position: relative;
+      width: 100%; height: 220px;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+      background: #e8e8e8;
+    }
+
+    @media (min-width: 768px) {
+      .map-container { height: 320px; }
+    }
+
+    .map-container iframe { width: 100%; height: 100%; border: none; filter: saturate(0.8); }
+
+    .map-marker {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -100%);
+      z-index: 2;
+      animation: markerBounce 2s infinite;
+    }
+
+    .map-marker svg { width: 40px; height: 40px; fill: var(--orange); filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); }
+
+    .coords {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--navy);
+      background: var(--cream);
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      display: inline-block;
+      margin-bottom: 0.8rem;
+    }
+
+    .map-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      color: var(--navy);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 3rem;
+      border: 2px solid var(--navy);
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover { background: var(--navy); color: var(--white); }
+
+    /* ─── SWIPE CARDS ─── */
+    .swipe-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--light-navy) 100%);
+      border-radius: 1.5rem;
+      padding: 2.5rem 1.5rem;
+      margin: 0 1rem;
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .swipe-section { padding: 3.5rem 2rem; margin: 0 2rem; }
+    }
+
+    .swipe-section .section-header h2 { color: var(--white); }
+    .swipe-section .section-header p { color: rgba(255,255,255,0.7); }
+    .swipe-section .divider { background: var(--orange); }
+
+    .cards-wrapper {
+      position: relative;
+      width: 100%; height: 440px;
+      perspective: 1000px;
+      margin-top: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .cards-wrapper { height: 520px; }
+    }
+
+    .card-stack { position: relative; width: 100%; height: 100%; }
+
+    .fact-card {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--white);
+      color: var(--black);
+      border-radius: 1.2rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: grab;
+      user-select: none;
+    }
+
+    .fact-card:active { cursor: grabbing; }
+
+    .fact-card.active { z-index: 10; transform: translateX(0) rotate(0deg) scale(1); opacity: 1; }
+    .fact-card.next { z-index: 5; transform: translateX(8px) translateY(-10px) rotate(2deg) scale(0.96); opacity: 0.7; }
+    .fact-card.behind { z-index: 1; transform: translateX(16px) translateY(-20px) rotate(4deg) scale(0.92); opacity: 0.4; }
+    .fact-card.swiped-left { transform: translateX(-120%) rotate(-15deg) scale(0.9); opacity: 0; }
+    .fact-card.swiped-right { transform: translateX(120%) rotate(15deg) scale(0.9); opacity: 0; }
+
+    @media (min-width: 768px) {
+      .fact-card.next { transform: translateX(10px) translateY(-14px) rotate(0deg) scale(0.97); }
+      .fact-card.behind { transform: translateX(20px) translateY(-26px) rotate(0deg) scale(0.94); }
+    }
+
+    .fact-card-img-wrap {
+      width: 100%;
+      padding: 1.5rem 1.5rem 0.6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .fact-card-img-wrap { padding: 2.5rem 2rem 1rem; }
+    }
+
+    .fact-card-img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 1rem;
+      display: block;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    @media (min-width: 768px) {
+      .fact-card-img {
+        width: 260px;
+        height: 260px;
+      }
+    }
+
+    .fact-card-body {
+      flex: 1;
+      padding: 0.6rem 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .fact-card-body { padding: 0.6rem 2rem 1.2rem; }
+    }
+
+    .fact-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 768px) {
+      .fact-card h3 { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    }
+
+    .fact-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    @media (min-width: 768px) {
+      .fact-card p { font-size: 1.05rem; }
+    }
+
+    .card-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.2rem; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: all 0.3s ease; }
+    .dot.active { background: var(--orange); width: 24px; border-radius: 4px; }
+
+    .swipe-hint {
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 0.8rem;
+    }
+
+    /* ─── WALDCAMP ─── */
+    .waldcamp-visual {
+      width: 100%; height: 220px;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #1a3a1a 0%, #2d5a2d 50%, #1a3a1a 100%);
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .waldcamp-visual { height: 560px; }
+    }
+
+    .waldcamp-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1558550122-079d10d8dc29?q=80&w=2299&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
+      opacity: 0.6;
+    }
+
+
+
+    .feature-list { list-style: none; padding: 0; margin: 1.2rem 0; }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.6rem 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+
+    .feature-list li:last-child { border-bottom: none; }
+
+    .feature-list .check {
+      width: 22px; height: 22px;
+      background: var(--orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-list .check svg { width: 12px; height: 12px; fill: var(--white); }
+
+    /* ─── LIVE SECTION ─── */
+    .live-section {
+      background: var(--navy);
+      border-radius: 1.5rem;
+      padding: 2rem 1.5rem;
+      margin: 0 1rem;
+      text-align: center;
+      color: var(--white);
+    }
+
+    @media (min-width: 768px) {
+      .live-section { padding: 3rem 2rem; margin: 0 2rem; }
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(233,131,8,0.2);
+      color: var(--orange);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .live-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; animation: pulse 2s infinite; }
+
+    .live-section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .live-section p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+    }
+
+    .live-video-wrap {
+      width: 100%;
+      height: 200px;
+      border-radius: 1rem;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+    }
+
+    @media (min-width: 768px) {
+      .live-video-wrap { height: 400px; }
+    }
+
+    .live-video-wrap video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .live-video-overlay {
+      position: absolute;
+      bottom: 0.6rem;
+      left: 0.6rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0,0,0,0.6);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.7rem;
+      border-radius: 2rem;
+    }
+
+    .live-video-overlay .dot-live {
+      width: 6px; height: 6px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section { position: relative; padding: 0; margin: 0; max-width: 100%; }
+
+    .cta-bg {
+      position: relative;
+      width: 100%; min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.5rem 3rem;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .cta-bg { min-height: 600px; padding: 3rem 2rem 4rem; }
+    }
+
+    .cta-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(20,40,90,0.2) 0%, rgba(20,40,90,0.85) 60%, rgba(20,40,90,0.95) 100%),
+                  url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80') center/cover no-repeat;
+      z-index: 0;
+    }
+
+    .cta-content { position: relative; z-index: 2; max-width: 700px; }
+
+    @media (min-width: 768px) {
+      .cta-content { max-width: 800px; }
+    }
+
+    .cta-content h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 768px) {
+      .cta-content h2 { font-size: 2.8rem; }
+    }
+
+    .cta-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+    }
+
+    .cta-buttons { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    @media (min-width: 768px) {
+      .cta-buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+
+    .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      border-radius: 3rem;
+      border: none;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-cta-primary {
+      background: var(--orange);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(233,131,8,0.4);
+    }
+
+    .btn-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(233,131,8,0.5); }
+
+    .btn-cta-secondary {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-cta-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); }
+
+    /* ─── PARTNER ─── */
+    .partner-section { padding: 3rem 1.5rem; text-align: center; }
+
+    @media (min-width: 768px) {
+      .partner-section { padding: 4rem 2rem; }
+    }
+
+    .partner-section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 768px) {
+      .partner-section h2 { font-size: 2rem; }
+    }
+
+    .partner-section .divider { margin-bottom: 2rem; }
+
+    .partner-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 400px;
+      margin: 0 auto 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .partner-grid {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        max-width: 100%;
+      }
+    }
+
+    .partner-link {
+      display: block;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .partner-link:hover { transform: scale(1.05); }
+
+    .partner-logo-img {
+      height: 60px;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain;
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .partner-logo-img { height: 80px; max-width: 280px; }
+    }
+
+    @media (min-width: 1024px) {
+      .partner-logo-img { height: 100px; max-width: 340px; }
+    }
+
+    .partner-logo-img.seawolves {
+      filter: none;
+      background: var(--navy);
+      padding: 8px 16px;
+      border-radius: 0.8rem;
+    }
+
+    .partner-footer {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: #777;
+      font-style: italic;
+      margin-top: 1.5rem;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+    }
+
+    .footer-brand {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-8px); }
+      60% { transform: translateX(-50%) translateY(-4px); }
+    }
+
+    @keyframes markerBounce {
+      0%, 100% { transform: translate(-50%, -100%) translateY(0); }
+      50% { transform: translate(-50%, -100%) translateY(-6px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    /* ─── REVEAL ON SCROLL ─── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+
+
+  <!-- ═══ FLOATING LOGO ═══ -->
+  <a href="#" class="floating-logo" id="floatingLogo">
+    <img src="logo.png" alt="Wolfis wilder Honig">
+  </a>
+
+  <!-- ═══ BURGER BUTTON ═══ -->
+  <button class="burger-btn" id="burgerBtn" aria-label="Menü öffnen">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- ═══ FULLSCREEN MENU ═══ -->
+  <div class="menu-overlay" id="menuOverlay">
+    <a href="#klotzbeute" class="menu-link">Klotzbeute</a>
+    <a href="#fakten" class="menu-link">Fakten</a>
+    <a href="#waldcamp" class="menu-link">Waldcamp</a>
+    <a href="#live" class="menu-link">Live</a>
+    <a href="#mitmachen" class="menu-link">Mitmachen</a>
+    <div class="menu-footer">Wolfis wilder Honig © 2026</div>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Wolfis wilder Honig</div>
+      <h1>Du hältst mehr als Honig in der Hand.</h1>
+      <p>Dieses Glas erzählt die Geschichte von Bienen, Wald und einem neuen Waldbildungsort in Mecklenburg-Vorpommern.</p>
+      <a href="#klotzbeute" class="btn-primary">
+        Entdecke Wolfis Klotzbeute
+        <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+      </a>
+    </div>
+    <div class="scroll-hint">
+      <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    </div>
+  </div>
+
+  <!-- ═══ MAP ═══ -->
+  <section class="reveal" id="klotzbeute">
+    <div class="map-section">
+      <div class="section-header">
+        <h2>Dieser Honig hat ein Zuhause.</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="map-container">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=12.90%2C54.12%2C13.00%2C54.16&layer=mapnik&marker=54.1433%2C12.9209"
+          allowfullscreen>
+        </iframe>
+        <div class="map-marker">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <span class="coords">📍 Wolfswiese bei Barnekow</span><br>
+        <span class="coords">54°08'36.0"N 12°55'15.2"E</span>
+      </div>
+      <p class="map-text">
+        Genau hier steht Wolfis Klotzbeute. Hier in der Nähe entsteht auch das neue Waldcamp für Kinder, Familien und Umweltbildung.
+      </p>
+      <div style="text-align:center">
+        <a href="https://www.openstreetmap.org/?mlat=54.1433&mlon=12.9209#map=15/54.1433/12.9209" target="_blank" class="btn-secondary">
+          Standort ansehen
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SWIPE CARDS ═══ -->
+  <section class="reveal" id="fakten">
+    <div class="swipe-section">
+      <div class="section-header">
+        <h2>Wusstest du schon?</h2>
+        <div class="divider"></div>
+        <p>Swipe für spannende Fakten über Bienen, Wald und Natur</p>
+      </div>
+      <div class="cards-wrapper" id="cardWrapper">
+        <div class="card-stack" id="cardStack">
+          <div class="fact-card active" data-index="0">
+            <div class="fact-card-img-wrap">
+              <img class="fact-card-img" src="https://images.unsplash.com/photo-1566146991569-696da38bb775?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Blumenwiese">
+            </div>
+            <div class="fact-card-body">
+              <h3>Mehrere Millionen Blüten</h3>
+              <p>Für ein Glas Honig besuchen Bienen mehrere Millionen Blüten. Jeder Tropfen ist ein kleines Wunder der Natur.</p>
+            </div>
+          </div>
+          <div class="fact-card next" data-index="1">
+            <div class="fact-card-img-wrap">
+              <img class="fact-card-img" src="https://images.unsplash.com/photo-1603976328262-4c1b46d7e6e8?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Wald">
+            </div>
+            <div class="fact-card-body">
+              <h3>Wald als Lebensraum</h3>
+              <p>Viele Wildbienenarten sind auf strukturreiche Wälder angewiesen. Ohne Wald keine Artenvielfalt.</p>
+            </div>
+          </div>
+          <div class="fact-card behind" data-index="2">
+            <div class="fact-card-img-wrap">
+              <img class="fact-card-img" src="https://images.unsplash.com/photo-1600752085601-1ec2646cd736?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Obstgarten">
+            </div>
+            <div class="fact-card-body">
+              <h3>Unsere Nahrung hängt davon ab</h3>
+              <p>Ein großer Teil unserer Nahrung hängt direkt oder indirekt von Bestäubung ab. Bienen sind unverzichtbar.</p>
+            </div>
+          </div>
+          <div class="fact-card behind" data-index="3">
+            <div class="fact-card-img-wrap">
+              <img class="fact-card-img" src="klotzbeute.jpg" alt="Klotzbeute">
+            </div>
+            <div class="fact-card-body">
+              <h3>Klotzbeuten im Einklang</h3>
+              <p>Klotzbeuten orientieren sich an natürlichen Lebensräumen wildlebender Bienen – nachhaltig und artgerecht.</p>
+            </div>
+          </div>
+          <div class="fact-card behind" data-index="4">
+            <div class="fact-card-img-wrap">
+              <img class="fact-card-img" src="https://images.unsplash.com/photo-1561558531-fa064f798737?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Waldcamp">
+            </div>
+            <div class="fact-card-body">
+              <h3>Vom Projekt zum Waldbildungsort</h3>
+              <p>Aus einem Seawolves-Bienenprojekt entsteht jetzt ein echter Waldbildungsort für die ganze Region.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-dots" id="cardDots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <p class="swipe-hint">← Swipe oder klicke die Karten →</p>
+    </div>
+  </section>
+
+  <!-- ═══ WALDCAMP ═══ -->
+  <section class="reveal" id="waldcamp">
+    <div class="section-header">
+      <h2>Hier entsteht Wolfis Waldcamp</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="waldcamp-visual"></div>
+    <p style="font-family:'Inter',sans-serif; font-size:0.95rem; color:#444; line-height:1.6; margin-bottom:1rem;">
+      Gemeinsam mit der <strong>Waldstiftung Mecklenburg-Vorpommern</strong>, der <strong>Landesforstanstalt MV</strong> und den <strong>Rostock Seawolves</strong> entsteht auf der Wolfswiese ein neuer Lern- und Erlebnisort.
+    </p>
+    <ul class="feature-list">
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+        Umweltbildungsangebote
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+        Nachwuchsaktionen
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+        Schulklassenprogramme
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+        Bienen- und Biodiversitätsprojekte
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
+        Naturerlebnisse für Kinder und Familien
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══ LIVE ═══ -->
+  <section class="reveal" id="live">
+    <div class="live-section">
+      <div class="live-badge"><span class="live-dot"></span> Bald verfügbar</div>
+      <h2>Was ist auf Wolfis Wiese los?</h2>
+      <p>Schau bald live auf die Wolfswiese – und erlebe Bienen, Wald und Natur hautnah.</p>
+      <div class="live-video-wrap">
+        <video autoplay loop muted playsinline poster="">
+          <source src="https://cdn.pixabay.com/video/2022/09/27/132779-754878761_large.mp4" type="video/mp4">
+        </video>
+        <div class="live-video-overlay">
+          <span class="dot-live"></span>
+          Demo-Stream
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-section reveal" id="mitmachen">
+    <div class="cta-bg">
+      <div class="cta-content">
+        <h2>Aus einem Glas Honig kann ein Stück Zukunft werden.</h2>
+        <p>Mit deiner Unterstützung wächst aus der Wolfswiese ein dauerhafter Ort für Umweltbildung und Naturerlebnisse.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn-cta btn-cta-primary">
+            Waldcamp unterstützen
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="btn-cta btn-cta-secondary">
+            Folge uns auf Instagram
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PARTNER ═══ -->
+  <section class="partner-section reveal">
+    <h2>Partner & Unterstützer</h2>
+    <div class="divider"></div>
+    <div class="partner-grid">
+      <a href="https://seawolves.de/" target="_blank" class="partner-link">
+        <img src="https://seawolves.de/wp-content/uploads/2024/01/Seawolves-Basketball_Wort-Bildmarke_quer_Text-weiss_400px.png" alt="Rostock Seawolves" class="partner-logo-img seawolves">
+      </a>
+      <a href="https://www.wald-mv.de/waldstiftung-mv/" target="_blank" class="partner-link">
+        <img src="https://www.wald-mv.de/static/WALDMV/Dateien/Bilder/Stiftung/waldstiftung-mv-logo.png" alt="Waldstiftung MV" class="partner-logo-img">
+      </a>
+      <a href="https://www.wald-mv.de" target="_blank" class="partner-link">
+        <img src="https://cdn-assets-cloud.frontify.com/s3/frontify-cloud-files-us/eyJwYXRoIjoiZnJvbnRpZnlcL2FjY291bnRzXC9jZlwvMjI3MjYzXC9wcm9qZWN0c1wvMzIwMzIyXC9hc3NldHNcLzAzXC82MDA5MTEyXC8xYThhMGNiMDA4NDMyMjIxYWU3YjcwMGI5MGJlNThkMy0xNjM2NDY0MzM4LmVwcyJ9:frontify:adIYs4AO1um3o_6tVqzrkY9kRdJ3nLNWHPCUNDJCLX0?width=426&format=webp&quality=100" alt="Landesforst MV" class="partner-logo-img">
+      </a>
+    </div>
+    <p class="partner-footer">Gemeinsam für Wald, Bildung und Artenvielfalt.</p>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer">
+    <div class="footer-brand">Wolfis wilder Honig</div>
+    <p>Die süßeste Seite der Umweltbildung</p>
+    <p style="margin-top:0.5rem">© 2026 Wolfis Waldcamp</p>
+  </div>
+
+  <script>
+    // ─── Scroll Reveal ───
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ─── Floating Logo Scroll State ───
+    const floatingLogo = document.getElementById('floatingLogo');
+    const burgerBtn = document.getElementById('burgerBtn');
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 80;
+      floatingLogo.classList.toggle('scrolled', scrolled);
+      burgerBtn.classList.toggle('scrolled', scrolled);
+    });
+
+    // ─── Burger Menu Toggle ───
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    burgerBtn.addEventListener('click', () => {
+      burgerBtn.classList.toggle('open');
+      menuOverlay.classList.toggle('open');
+      document.body.style.overflow = menuOverlay.classList.contains('open') ? 'hidden' : '';
+    });
+
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        burgerBtn.classList.remove('open');
+        menuOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ─── Swipe Cards ───
+    const cards = document.querySelectorAll('.fact-card');
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+    const totalCards = cards.length;
+
+    function updateCards() {
+      cards.forEach((card, i) => {
+        card.classList.remove('active', 'next', 'behind', 'swiped-left', 'swiped-right');
+        const diff = i - currentIndex;
+        if (diff === 0) card.classList.add('active');
+        else if (diff === 1 || (currentIndex === totalCards - 1 && i === 0)) card.classList.add('next');
+        else card.classList.add('behind');
+      });
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+    }
+
+    function nextCard() {
+      cards[currentIndex].classList.add('swiped-left');
+      currentIndex = (currentIndex + 1) % totalCards;
+      setTimeout(updateCards, 100);
+    }
+
+    function prevCard() {
+      cards[currentIndex].classList.add('swiped-right');
+      currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+      setTimeout(updateCards, 100);
+    }
+
+    cards.forEach(card => card.addEventListener('click', nextCard));
+
+    // Touch swipe
+    let startX = 0;
+    const wrapper = document.getElementById('cardWrapper');
+    wrapper.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+    wrapper.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) nextCard();
+        else prevCard();
+      }
+    });
+
+    // Mouse drag (Desktop)
+    let isDragging = false;
+    let mouseStartX = 0;
+    wrapper.addEventListener('mousedown', e => {
+      isDragging = true;
+      mouseStartX = e.clientX;
+      wrapper.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mouseup', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      wrapper.style.cursor = '';
+      const diff = mouseStartX - e.clientX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0) nextCard();
+        else prevCard();
+      }
+    });
+
+    setInterval(nextCard, 6000);
+  </script>
+
+</body>
+</html>
